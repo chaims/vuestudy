@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>lesson 7</title>
+</head>
+<body>
+<ol>
+    <li>computed</li>
+    <li>watch</li>
+    <li>mixins</li>
+    <li>extends</li>
+</ol>
+<div id="app">
+       <p>{{newPrice}}</p>
+       <ul>
+           <li v-for="(news,index) in reversNews">{{index}} - {{news.title}} - {{news.data}}</li>
+       </ul>
+       <hr>
+       <p>{{temperature}} : {{suggestion}}</p>
+       <button @click="operTemp('+')" >升高温度</button>
+       <button @click="operTemp('-')" >降低温度</button>
+       <hr>
+       <p>{{price}}</p>
+       <button @click="add">add方法</button>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+<script>  
+var consoleLog = {
+    updated () {
+        console.log(JSON.stringify(this.suggestions));
+    }
+}
+
+var extendApp = {
+    created: function() {
+        console.log('extend functions');
+    },
+    methods: {
+        add () {
+            console.log('extend function add');
+        }
+    }
+}
+
+var app=new Vue({
+    el:'#app',
+    data:{
+        price:100,
+        newsList: [
+            {title:'香港或就“装甲车被扣”事件追责 起诉涉事运输公司',date:'2017/3/10'},
+            {title:'日本第二大准航母服役 外媒：针对中国潜艇',date:'2017/3/12'},
+            {title:'中国北方将有明显雨雪降温天气 南方阴雨持续',date:'2017/3/13'},
+            {title:'起底“最短命副市长”：不到40天落马，全家被查',date:'2017/3/23'},
+        ],
+        suggestions: ['T恤短袖','夹克长裙','棉衣羽绒服'],
+        temperature: 14,
+        suggestion: '夹克长裙'
+    },
+    computed:{
+        newPrice:function(){
+            return this.price='￥' + this.price + '元';
+        },
+        reversNews () {
+            return this.newsList.reverse()
+        }
+    },
+    watch: {
+        temperature (oldVal, newVal) {
+            if (newVal < 5) {
+                this.suggestion = this.suggestions[2];
+            } else if (newVal > 15) {
+                this.suggestion = this.suggestions[0];
+            } else {
+                this.suggestion = this.suggestions[1];
+            }
+        }
+    },
+    methods: {
+        operTemp (delt) {
+            this.temperature = this.temperature + ((delt === '+') ? 2 : -2);
+        },
+        add () {
+            console.log('origin add function');
+        }
+    },
+    mixins: [consoleLog],
+    updated:function(){
+        console.log("构造器里的updated方法。")
+    },
+    extends: extendApp
+});
+</script>  
+</body>
+</html>

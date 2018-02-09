@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>lesson 8</title>
+</head>
+<body>
+<ol>
+   <li>slot</li>
+</ol>
+<div id="app">
+    <test>
+        <span slot="bolgUrl">{{testData.bolgUrl}}</span>    
+        <span slot="netName">{{testData.netName}}</span>    
+        <span slot="skill">{{testData.skill}}</span>    
+    </test>
+</div>
+<template id="tmp">
+    <div>
+        <p>网址：<slot name="bolgUrl"></slot></p>
+        <p>名字：<slot name="netName"></slot></p>
+        <p>作用：<slot name="skill"></slot></p>
+    </div>
+</template>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+<script> 
+var app=new Vue({
+    el:'#app',
+    data:{
+        testData:{
+            bolgUrl:'http://www.baidu.com',
+            netName:'百度',
+            skill:'搜索入口'
+        }
+    },
+    components: {
+        test: {
+            template: '#tmp'
+        }
+    },
+    computed:{},
+    watch: {},
+    methods: {}
+});
+</script>  
+</body>
+</html>

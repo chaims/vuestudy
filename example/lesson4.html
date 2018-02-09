@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>lesson 4</title>
+</head>
+<body>
+<ol>
+    <li>Vue.directive</li>
+    <li>Vue.extend</li>
+</ol>
+<div id="app">
+    <div id="demo1" v-test="color" >{{num}}</div>
+    <button @click="addNum">增加</button>
+    <hr>
+    <input v-focus>
+    <hr>
+    <div v-test2:foo.a.b="message">{{message}}</div>
+    <hr>
+    <div v-test3="{ color: 'white', text: 'hello!' }"></div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+<script>  
+var app=new Vue({
+    el:'#app',
+    data:{
+        num: 0,
+        color: 'red',
+        message: 'Heloo vue directives'
+    },
+    methods: {
+        addNum () {
+            this.num++;
+            this.color = 'rgb('+(~~(Math.random()*255))+','+(~~(Math.random()*255))+','+(~~(Math.random()*255))+')';
+        }
+    },
+    directives: {
+        focus: {
+            // 指令的定义
+            inserted: function (el) {
+                el.focus()
+            }
+        },
+        test: {
+            bind: function(el, binding, vnode){
+                el.style = "color:" + binding.value;
+            }
+        },
+        test2: {
+            bind: function(el, binding, vnode){
+                console.log('---bind---');
+                var s = JSON.stringify;
+                el.innerHTML ='name: '       + s(binding.name) + '<br>' +
+                'value: '      + s(binding.value) + '<br>' +
+                'expression: ' + s(binding.expression) + '<br>' +
+                'argument: '   + s(binding.arg) + '<br>' +
+                'modifiers: '  + s(binding.modifiers) + '<br>' +
+                'vnode keys: ' + Object.keys(vnode).join(', ');
+            },
+            inserted: function(el, binding, vnode){
+                console.log('---inserted---');
+                console.log(el);
+                console.log(binding);
+                console.log(vnode);
+            },
+            update: function(el, binding, vnode){
+                console.log('---update---');
+                console.log(el);
+                console.log(binding);
+                console.log(vnode);
+            },
+            componentUpdated: function(el, binding, vnode){
+                console.log('---componentUpdated---');
+                console.log(el);
+                console.log(binding);
+                console.log(vnode);
+            },
+            unbind: function(el, binding, vnode){
+                console.log('---unbind---');
+                console.log(el);
+                console.log(binding);
+                console.log(vnode);
+            }
+        },
+        test3: {
+            bind: function (el, binding) {
+                el.innerHTML = JSON.stringify(binding.value);
+            }
+        }
+    }
+});
+</script>  
+</body>
+</html>

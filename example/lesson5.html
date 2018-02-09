@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>lesson 5</title>
+</head>
+<body>
+<ol>
+    <li>Vue.extend 及 propsData</li>
+    <li>Vue.set</li>
+    <li>生命周期</li>
+</ol>
+<div id="app">
+    <auth></auth>
+    <div id="authDom"></div>
+    <hr>
+    <ul>
+        <li v-for=" aa in arr">{{aa}}</li>
+    </ul>
+    <button @click="add">添加</button>
+    <hr>
+    <p>{{count}}</p>
+    <button @click="increase">增加</button>
+    <button @click="dest">销毁</button>
+    <hr>
+    
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+<script>  
+var auth = Vue.extend({
+    template: '<p><a :href="authhref">{{authname}} - {{authtag}}</a></p>',
+    data () {
+        return {
+            authname: 'ch',
+            authhref: 'https://www.baidu.com'
+        }
+    },
+    props: ['authtag']
+});
+new auth({propsData:{authtag:'tag1'}}).$mount('auth');
+new auth({propsData:{authtag:'tag2'}}).$mount('#authDom');
+
+var outData = {
+    arr: ['a', 'b', 'c'],
+    count: 1
+}
+var app=new Vue({
+    el:'#app',
+    data:outData,
+    methods: {
+        add () {
+            Vue.set(this.arr, 1, 'ddd');
+        },
+        increase () {
+            this.count++;
+        },
+        dest () {
+            this.$destroy();
+        }
+    },
+    beforeCreate:function(){
+        console.log('1-beforeCreate 初始化之后');
+    },
+    created:function(){
+        console.log('2-created 创建完成');
+    },
+    beforeMount:function(){
+        console.log('3-beforeMount 挂载之前');
+    },
+    mounted:function(){
+        console.log('4-mounted 被创建');
+    },
+    beforeUpdate:function(){
+        console.log('5-beforeUpdate 数据更新前');
+    },
+    updated:function(){
+        console.log('6-updated 被更新后');
+    },
+    activated:function(){
+        console.log('7-activated');
+    },
+    deactivated:function(){
+        console.log('8-deactivated');
+    },
+    beforeDestroy:function(){
+        console.log('9-beforeDestroy 销毁之前');
+    },
+    destroyed:function(){
+        console.log('10-destroyed 销毁之后')
+    }
+});
+</script>  
+</body>
+</html>

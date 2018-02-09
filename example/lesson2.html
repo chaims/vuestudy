@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<ol>
+    <li>v-if/v-else</li>
+    <li>v-show</li>   
+    <li>v-bind</li>
+    <li>v-for</li>
+    <li>v-text</li>
+    <li>v-html</li>
+</ol>    
+<div id="app">
+    <div v-if="isLogin">Hello users</div>
+    <div v-else>请登录后操作</div> 
+    <hr>
+    <div v-show="isShow">你好：JSPang</div>
+    <div v-show="!isShow">请登录后操作</div>
+    <hr>
+    <span v-bind:title="message">
+        鼠标悬停几秒钟查看此处动态绑定的提示信息！
+    </span>
+    <hr>
+    <ol>
+        <li v-for="todo in todos">
+            {{ todo.text }}
+        </li>
+    </ol>
+    <hr>
+    <ol>
+        <li v-for="num in items">{{num}}</li>
+    </ol>
+    <hr>
+    <ol>
+        <li v-for="item in sortedItems">{{item}}</li>
+    </ol>
+    <hr>
+    <ol>
+        <li v-for="(stu, index) in students">
+           {{index}}:{{stu.name + '-' + stu.age}}
+        </li>
+    </ol>
+    <hr>
+    <span>{{ message }}</span> 
+    <span v-text="message"></span>
+    <hr>
+    <span v-html="msgHtml"></span>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+<script>        
+    var app=new Vue({
+        el:'#app',
+        data:{
+            isLogin: false,
+            isShow: true,
+            message: '页面加载于 ' + new Date().toLocaleString(),
+            todos: [
+                { text: '学习 JavaScript' },
+                { text: '学习 Vue' },
+                { text: '整个牛项目' }
+            ],
+            items: [20,23,18,65,32,19,54,56,41],
+            students: [
+                {name:'jspang',age:32},
+                {name:'Panda',age:30},
+                {name:'PanPaN',age:21},
+                {name:'King',age:45}
+            ],
+            msgHtml: '<span style="color:red;">v-html</span>'
+        },
+        computed: {
+            sortedItems () {
+                return this.items.sort((a, b) => a-b );
+            }
+        }
+    })
+</script>  
+</body>
+</html>
