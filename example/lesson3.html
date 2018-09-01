@@ -71,6 +71,7 @@
     <hr>
     <div v-once>第一次绑定的值：{{message}}</div>
     <div><input type="text" v-model="message"></div>
+   
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
 <script>        
@@ -89,7 +90,8 @@
             styleObject: {
                 color:'red',
                 fontSize:'12px'
-            }
+            },
+            tableList: []
         },
         methods: {
             reverseMessage () {

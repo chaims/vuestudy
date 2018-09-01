@@ -50,6 +50,7 @@
     <span v-text="message"></span>
     <hr>
     <span v-html="msgHtml"></span>
+    <button @click="add">添加</button>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
 <script>        
@@ -76,6 +77,11 @@
         computed: {
             sortedItems () {
                 return this.items.sort((a, b) => a-b );
+            }
+        },
+        methods: {
+            add () {
+                this.items.push(1);
             }
         }
     })
